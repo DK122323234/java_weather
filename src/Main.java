@@ -29,17 +29,14 @@ public class Main {
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
-
-            JSONObject jsonObject = new JSONObject(sb.toString());
-            JSONArray jsonArray = jsonObject.getJSONArray("list");
-            JSONObject mai = jsonArray.getJSONObject(0);
-            JSONObject main = mai.getJSONObject("main");
-            double temperature = main.getDouble("temp");
-            JSONObject maiQ = jsonArray.getJSONObject(1);
-            JSONObject maiP = mai.getJSONObject("main");
-            double temperatur = main.getDouble("temp");
-            System.out.println("Температура:" + temperatur);
-            System.out.println("Температура" + temperature);
+             for(int i = 0; i < 7; i ++) {
+                 JSONObject jsonObject = new JSONObject(sb.toString());
+                 JSONArray jsonArray = jsonObject.getJSONArray("list");
+                 JSONObject mai = jsonArray.getJSONObject(i );
+                 JSONObject main = mai.getJSONObject("main");
+                 double temperature = main.getDouble("temp");
+                 System.out.println(temperature);
+             }
 
 
         } catch (Exception e) {
