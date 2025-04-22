@@ -40,7 +40,7 @@ public class Main {
 
 
         } catch (Exception e) {
-            System.out.println("Что то не так");
+            System.out.println("Привет, я крутой. А ты нет ");
             e.printStackTrace();
         }
     }
