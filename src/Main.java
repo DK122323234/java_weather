@@ -25,7 +25,7 @@ public class Main {
             }
             cityName = locationResponse.toString();
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println("Ошибка в ip" + e.toString());
         }
 
         try {
@@ -48,7 +48,7 @@ public class Main {
             }
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println("Ошибка в сайте погоды:" + e.toString());
             e.printStackTrace();
         }
     }
