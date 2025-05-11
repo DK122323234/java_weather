@@ -19,8 +19,8 @@ public class Main {
 
         try {
             // URL для получения информации о местоположении по IP
-            String url = "https://ipinfo.io/city";
-            BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
+            String url1 = "https://ipinfo.io/city";
+            BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url1).openStream()));
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
@@ -33,8 +33,8 @@ public class Main {
 
 
         try {
-            String ur = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + ip + "&units=metric";
-            BufferedReader br = new BufferedReader(new InputStreamReader(new URL(ur).openStream()));
+            String url2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + ip + "&units=metric";
+            BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url2).openStream()));
 
             StringBuilder sb = new StringBuilder();
             String line;
@@ -46,15 +46,15 @@ public class Main {
 
                 JSONObject jsonObject = new JSONObject(sb.toString());
                 JSONArray jsonArray = jsonObject.getJSONArray("list");
-                JSONObject mai = jsonArray.getJSONObject(i);
-                JSONObject main = mai.getJSONObject("main");
+                JSONObject arrayJSONObject = jsonArray.getJSONObject(i);
+                JSONObject main = arrayJSONObject.getJSONObject("main");
                 double temperature = main.getDouble("temp");
                 System.out.println("Температура:" + temperature);
             }
 
 
         } catch (Exception e) {
-            System.out.println("Что то не так");
+            System.out.println(e.toString());
             e.printStackTrace();
         }
     }
