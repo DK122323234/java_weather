@@ -3,55 +3,49 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.sound.sampled.Line;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Scanner;
 
 public class Main {
-    private static String ip = "29ed5ca47c3d0c32385b18f1e82e522f";
-    public static String city;
+    private static String apiKey = "29ed5ca47c3d0c32385b18f1e82e522f";
+    public static String cityName;
 
     public static void main(String[] args) throws IOException {
 
         try {
-            // URL для получения информации о местоположении по IP
-            String url1 = "https://ipinfo.io/city";
-            BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url1).openStream()));
-            StringBuilder sb = new StringBuilder();
+
+            String locationUrl = "https://ipinfo.io/city";
+            BufferedReader locationReader = new BufferedReader(new InputStreamReader(new URL(locationUrl).openStream()));
+            StringBuilder locationResponse = new StringBuilder();
             String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+            while ((line = locationReader.readLine()) != null) {
+                locationResponse.append(line);
             }
-            city = sb.toString();
+            cityName = locationResponse.toString();
         } catch (Exception e) {
             System.out.println(e.toString());
         }
 
-
         try {
-            String url2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + ip + "&units=metric";
-            BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url2).openStream()));
+            String weatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey + "&units=metric";
+            BufferedReader weatherReader = new BufferedReader(new InputStreamReader(new URL(weatherUrl).openStream()));
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder weatherResponse = new StringBuilder();
             String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+            while ((line = weatherReader.readLine()) != null) {
+                weatherResponse.append(line);
             }
 
             for (int i = 0; i < 7; i++) {
-
-                JSONObject jsonObject = new JSONObject(sb.toString());
+                JSONObject jsonObject = new JSONObject(weatherResponse.toString());
                 JSONArray jsonArray = jsonObject.getJSONArray("list");
-                JSONObject arrayJSONObject = jsonArray.getJSONObject(i);
-                JSONObject main = arrayJSONObject.getJSONObject("main");
-                double temperature = main.getDouble("temp");
-                System.out.println("Температура:" + temperature);
+                JSONObject forecastObject = jsonArray.getJSONObject(i);
+                JSONObject mainWeatherData = forecastObject.getJSONObject("main");
+                double temperature = mainWeatherData.getDouble("temp");
+                System.out.println("Температура: " + temperature);
             }
-
 
         } catch (Exception e) {
             System.out.println(e.toString());
