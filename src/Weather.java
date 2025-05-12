@@ -55,7 +55,7 @@ public class Weather {
 
 
         } catch (Exception e) {
-            System.out.println("Что то не так");
+            System.out.println(e.toString());
             e.printStackTrace();
         }
     }
